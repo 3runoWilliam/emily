@@ -60,18 +60,17 @@
   
   <script>
     const audio = document.getElementById('musica');
-
-    window.addEventListener('load', () => {
-      audio.play().then(() => {
-        // tenta ativar o som depois
-        setTimeout(() => {
-          audio.muted = false;
-          audio.volume = 0.3;
-        }, 1500);
-      }).catch(() => {
-        console.log("Safari bloqueou autoplay com som.");
-      });
-    });
+  
+    function ativarAudio() {
+      audio.muted = false;
+      audio.volume = 0.3;
+      audio.play();
+  
+      // remove depois de ativar uma vez
+      document.removeEventListener('touchstart', ativarAudio);
+    }
+  
+    document.addEventListener('touchstart', ativarAudio);
   </script>
   
 </body>
