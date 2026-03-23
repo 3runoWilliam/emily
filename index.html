@@ -56,10 +56,32 @@
     </p>
   </div>
 
-  <audio autoplay loop>
+  <audio id="musica" autoplay loop muted>
     <source src="anavitoria.mp3" type="audio/mpeg">
-    Seu navegador não suporta áudio.
   </audio>
-
+  
+  <script>
+    const audio = document.getElementById('musica');
+  
+    // tenta tocar automaticamente
+    window.addEventListener('load', () => {
+      audio.play().then(() => {
+        // depois de iniciar, remove o mute
+        setTimeout(() => {
+          audio.muted = false;
+          audio.volume = 0.3;
+        }, 1000);
+      }).catch(() => {
+        console.log("Autoplay bloqueado, aguardando interação...");
+      });
+    });
+  
+    // fallback: primeiro clique ativa o som
+    document.body.addEventListener('click', () => {
+      audio.muted = false;
+      audio.play();
+    }, { once: true });
+  </script>
+  
 </body>
 </html>
